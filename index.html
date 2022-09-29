@@ -39,27 +39,144 @@
 
 <h2>Motivation</h2>
 
-<p><a href="#bottou-1990">Bottou, et al (1990) [1]</a>
-  Doing our internship in Retail companies (Amazon and Walmart) this summer, 
-  made us think alike and want to go deeper into computer vision and deep 
-  learning applications in retail. We thought of working on improving 
-  Virtual Mirrors to enhance customer personalization and experience. 
-  Virtual mirrors are becoming the central focus of personalization and 
-  customer experience enhancement in retail. It is basically a traditional
-  mirror with a display behind the glass. Powered with computer vision cameras
-  and AR, these mirrors can display a broad range of contextual information, 
-  which, in turn, helps buyers connect with brand better. This ML-based 
-  engine provides its users with real-time fashion recommendations by observing 
-  their current outfits. 
+<p>
+  Motivation: Doing our internship in retail companies (Amazon and Walmart) this summer, 
+  made us think alike and want to go deeper into computer vision and deep learning applications in retail. 
+  We thought of working on improving Virtual Mirrors to enhance customer personalization and experience. 
+  Virtual mirrors are becoming the central focus of personalization and customer experience enhancement in retail. 
+  It is basically a traditional mirror with a display behind the glass. Powered with computer vision cameras and AR, 
+  these mirrors can display a broad range of contextual information, which, in turn, helps buyers connect with the brand better. 
+  This ML-based engine provides its users with real-time fashion recommendations by observing their current outfits.
 
 </p>
 <h2>Abstract</h2>
+<p>
+  Image-based virtual try-on aims to fit an in-shop garments into a clothed person image. To achieve this, 
+  a key step is garment warping which spatially aligns the target garment with the corresponding body parts in 
+  the person image. Prior methods typically adopt a local appearance flow estimation model. They are thus 
+  intrinsically susceptible to difficult body poses/occlusions and large mis-alignments between person and garment images. 
+  To overcome this limitation, a novel global appearance flow estimation model is proposed in this work. 
+  For the first time, a StyleGAN based architecture is adopted for appearance flow estimation. 
+  This enables us to take advantage of a global style vector to encode a whole-image context to cope with the aforementioned 
+  challenges. To guide the StyleGAN flow generator to pay more attention to local garment deformation, a flow refinement 
+  module is introduced to add local context. A VTON model aims to fit an in-shop garment into a person's image. A key 
+  objective of a VTON model is to align the in-shop garment with the corresponding body parts in the person image. 
+  This is due to the fact that the in-shop garment is usually not spatially aligned with the person's image. Without the 
+  spatial alignment, directly applying advanced detail-preserving image to image translation models to fuse the texture in 
+  person image and garment image will result in unrealistic effect in the generated try-on image, especially in the occluded
+   and misaligned regions.
+</p>
 <h2>About Models</h2>
+<p>
+  Given the clothing-agnostic person representation p and the target clothing image c, 
+  we propose to synthesize the reference image I through reconstruction such that a natural transfer from c to the 
+  corresponding region of p can be learned. In particular, we utilize a multi-task encoder decoder framework that generates a clothed person image along with a clothing mask of the person as well. 
+  In addition to guiding the network to focus on the clothing region, the predicted clothing mask will be 
+  further utilized to refine the generated result. The encoder-decoder is a general type of U-net architecture with skip 
+  connections to directly share information between layers through bypassing connections.
+</p>
+<p>
+The refinement network in VITON is trained to render the coarse blurry region leveraging realistic details from a deformed target item. The network will be a fully convolutional model.
+  
+</p>
+<p>
+  To achieve other goals like pair recommendation and fill in the blank we plan to use Conditional Analogy GAN (CAGAN). CAGAN formulates the virtual try-on task as an image analogy problem - it treats the original item and the target clothing item together as a condition when training a Cycle-GAN. 
+
+</p>
+
 <h2>About Data</h2>
+<p>
+  We plan to experiment our model on the Zalando dataset. It contains a training set containing 14,221 image pairs and a testing dataset of 2,032. Each pair means a person's image and the image of the garment on the person. Both person and garment images are of the resolution 256 × 192. We also plan to create a testing dataset, denoted by augmented VITON, to evaluate model’s robustness to the random positioned person image with larger misalignments with the garment images in the original dataset. We are also finding some more freely available datasets so that we can increase robustness of our model but finding such a 
+  dataset is difficult as its a service provided by various companies with a hefty cost. This topic is still a research project incorporated by various companies such as C3.AI, Nvidia, PathAI, Snapchat, Amazon etc. 
+</p>
 <h2>Team Members</h2>
 <h2>Literature Survey</h2>
+<p>
+  With the advancement in eCommerce, clothing has been a highly revenue-generating field.
+   There numerous types of research & experiments have been proposed and tested for customer 
+   satisfaction with optimizing cost. About a decade ago, a virtual try-on was incorporated by the concept of parsing clothes, 
+   an idea similar to annotations in machine learning. Retrieving similar styles to parse clothing items. 
+   clothes parsing [4], clothing seen on the street to online products [5], fashion recommendation [19], visual 
+   compatibility learning [43, 16], and fashion trend prediction [2]. A year later, making use of parsing technologies, 
+   a trend of recommendation shot up customer interest [19]. Then with AR technologies and integration with 3D visuals, 
+   virtual try-on became realistic with body shape and size. 
+</p>
+<p>
+  GANs [6] showed promising advancement with their realistic generative results. Class labels,
+priorly done by image parsing helped in generating clothes with desired properties[7]. 
+Labels also served as conditions in GANs. This idea was similar to the image-to-image translation using conditional GANs and 
+it became the root of virtual-try-on. Image-to-image translation not only transformed the image into the desired output, 
+i.e. fitting of clothes, sleeves length, cloth texture/material, etc but it also allowed training a CNN using a 
+regression loss as an alternative to GANs for this task without adversarial training. 
+These methods can produce photo-realistic images but have limited success when geometric changes occur[50]. 
+GANs are computationally expensive, as high graphic computing is required to generated precise and realistic image. 
+
+</p>
+<p>
+  Resembled with the listed set of work, our concentration will be 2D images only. 
+  It will be challenging compared to contemporary work, which takes 3D input variables. 
+  From past implementations that focus on tweaking attributes(color and textures) of apparel [25, 48, 15] 
+  for interactive search we intend to improve with the VITON model. In the context of image-to-image translation 
+  for fashion applications, the main drawback of Yoo et al. [46] was the transformation of a clothed person conditioned 
+  on a product image and backward. It ignored the condition of the model's pose. of the person's pose.  
+  Lassner et al. [26] proposed a model that lacked conditions/control on fashion items in the generated output.
+</p>
+<p>
+  FashionGAN [51], substituted a category of cloth on a model with a new one specified by text descriptions.
+   However, we are curious about the accurate replacement of the clothing item in a reference image with a target model 
+   in the image. Additionally, there are various Virtual try-on implementation attempted conducted in computer graphics as well.
+    Guan et al. didn't have Yoo's drawback in his proposed DRAPE [13] to simulate 2D clothes on 3D bodies in different shapes
+     and poses. Sekine et al. [40] presented a VFS (Virtual Fitting System) [40] which perfectly adjusted 2D clothing 
+     images on consumers by inferring. This was implemented using image depth analysis and still required high computation. 
+     Yang et al. [45] recovered a 3D mesh of the garment from a single view 2D image, which is further re-targeted to other human bodies. 
+</p>
+<p>
+  There hasn't been much research done in computer vision to examine the virtual try-on problem. 
+  A conditional analogy GAN to exchange fashion items was recently presented by Jetchev and Bergmann [21]. 
+  However, they need product photos of both the target item and the original item on the individual during testing, 
+  which makes it impractical in real-world situations. Furthermore, without any human representing or explicitly 
+  considering deformations, it fails to provide photo-realistic virtual try-on results. Thus we focus on creating an 
+  accurate photo-realistic image straight from 2D photographs, which is more computationally economical, as opposed to 
+  relying on 3D measurements to accomplish perfect clothing simulation. 
+
+</p>
 <h2>Major Challenges</h2>
+<h3>Fashion Item Representation: </h3>
+<p>
+  Traditional recommender systems such as Collaborative Filtering or Content-Based Filtering have difficulties in the fashion domain due to the sparsity of purchase data, or the insufficient detail about the visual appearance of the product in category names. Instead, more recent literature has leveraged models that capture a rich representation of fashion items through product images, text descriptions or customer reviews, or videos which are often learned through surrogate tasks like classification or product retrieval. However, learning product representations from such input data requires large datasets to generalize well across different image (or text) styles, attribute variations, etc.
+</p>
+
+<h3>Fashion Item Compatibility </h3>
+<p>
+  Training a model that is able to predict if two fashion items ‘go together,’ or directly combine several products into an outfit, is a challenging task. Different item compatibility signals studied in recent literature include co-purchase data, outfits composed by professional fashion designers, or combinations found by analyzing what people wear in social media pictures. From this compatibility information, associated image and text data are then used to learn to generalize to stylistically similar products. 
+</p>
+
+<h3>Personalization and Fit: </h3>
+<p>
+  The best fashion product to recommend depends on factors such as the location where the outfit will be used, the season or occasion, or the cultural and social background of the customer. A challenging task in fashion recommendation systems is how discovering and integrating these disparate factors. In addition to predicting what size of a product will be more comfortable to wear, body shape can influence stylistic choices. 
+</p>
+
+<h3>Discovering Trends: </h3>
+<p>
+  Being able to forecast consumer preferences is valuable for fashion designers and retailers in order to optimize product-to-market fit, logistics, and advertising. Many factors are confounded in what features are considered ‘fashionable’ or ‘trendy’, like seasonality, geographical influence, historical events, or style dynamics. 
+</p>
+
 <h2>Potential Contributions</h2> 
+<h4>In the following, we present the most important goals we have identified in the literature. 
+  We plan to solve some of these in the due course of time.</h4>
+<h3> Goal 1 - Outfit Generation: </h3>
+<p> The goal of this task is, given a fashion item 𝑥𝑞 (e.g., skirt) representing the user's current interest, find the best item 𝑥 ∈ I (e.g., shirt) or the fashion outfit 𝐹 ∈ I (e.g., shirt, pants, hat) that goes/go well with the input query.</p>
+
+<h3> Goal 2 - Outfit Recommendation </h3>
+<p> 
+  This goal is related to the fashion and outfit recommendation task, where a set of objects is recommended to the user at once, by maximizing a utility function that measures the suitability of recommending a fashion outfit to a specific user. 
+</p>
+<h3> Goal 3 - Pair recommendation: </h3>
+<p> 
+  This goal is a simplification of the outfit recommendation goal when 𝑁 = 2. This is typically performed as a top-bottom or bottom-up recommendation. In this task, given clothes related to the upper part of the body, the aim is to predict the possible lower part and vice versa. For instance, a user has a cloth (e.g., tops) related to the upper part of the body and look for the bottom (e.g., trousers or skirts) from a large collection that best match the tops. This typically requires a collection of pairs of top and bottom images for compatibility modeling. </p>
+<h3> Goal 4 - Fill In the Blank (FITB): </h3>
+<p>
+  This goal is used in a setting where we are given an incomplete outfit 𝐹 − (e.g., shirt, pants, accessories) with a missing item (e.g., shoes), and the method must find the best missing fashion item 𝑥 ∈ {𝑥1, 𝑥2, 𝑥3, 𝑥4} from multiple choices where 𝐹 = {𝐹 −, 𝑥} has fashion items, which are compatible visually. This is a convenient scenario in real life, e.g., a user wants to choose a pair of shoes to suit his pants and jacket. </p>
 
 <h3>References</h3>
 
@@ -69,6 +186,7 @@
   <em>A framework for the cooperation of learning algorithms.</em></a>
   Advances in neural information processing systems 3 (1990).
 </p>
+
 
 <h2>Team Members</h2>
                                                    
