@@ -97,8 +97,8 @@ The refinement network in VITON is trained to render the coarse blurry region le
    There numerous types of research & experiments have been proposed and tested for customer 
    satisfaction with optimizing cost. About a decade ago, a virtual try-on was incorporated by the concept of parsing clothes, 
    an idea similar to annotations in machine learning. Retrieving similar styles to parse clothing items. 
-   clothes parsing <p><a href="#Paper doll parsing">Yamaguchi, et al (2013) [2]</a>, clothing seen on the street to online products <a href="#Street-toshop"> S. Liu, et al (2012) [3]</a>
-   fashion recommendation <a href="#Collaborative fashion recommendation">Y. Hu, et al (2015) [2]</a>, visual 
+   clothes parsing Yamaguchi, et al (2013) <a href="#Paper doll parsing"> [2]</a>, clothing seen on the street to online products S. Liu, et al (2012)  <a href="#Street-toshop"> [3]</a>
+   fashion recommendation Y. Hu, et al (2015) <a href="#Collaborative fashion recommendation">[2]</a>, visual 
    compatibility learning <a href="#Learning fashion">[7]</a> and fashion trend prediction. A year later, making use of parsing technologies, 
    a trend of recommendation shot up customer interest <a href="#Collaborative fashion recommendation">[3]</a>. Then with AR technologies and integration with 3D visuals, 
    virtual try-on became realistic with body shape and size. 
@@ -124,17 +124,17 @@ GANs are computationally expensive, as high graphic computing is required to gen
   Lassner et al. <a href="#11">[11]</a> proposed a model that lacked conditions/control on fashion items in the generated output.
 </p>
 <p>
-  FashionGAN [51], substituted a category of cloth on a model with a new one specified by text descriptions.
+  FashionGAN <a href="#12">[12]</a>, substituted a category of cloth on a model with a new one specified by text descriptions.
    However, we are curious about the accurate replacement of the clothing item in a reference image with a target model 
    in the image. Additionally, there are various Virtual try-on implementation attempted conducted in computer graphics as well.
-    Guan et al. didn't have Yoo's drawback in his proposed DRAPE [13] to simulate 2D clothes on 3D bodies in different shapes
-     and poses. Sekine et al. [40] presented a VFS (Virtual Fitting System) [40] which perfectly adjusted 2D clothing 
+    Guan et al. didn't have Yoo's drawback in his proposed DRAPE <a href="#13">[13]</a> to simulate 2D clothes on 3D bodies in different shapes
+     and poses. Sekine et al. <a href="#14">[14]</a> presented a VFS (Virtual Fitting System) <a href="#14">[14]</a> which perfectly adjusted 2D clothing 
      images on consumers by inferring. This was implemented using image depth analysis and still required high computation. 
-     Yang et al. [45] recovered a 3D mesh of the garment from a single view 2D image, which is further re-targeted to other human bodies. 
+     Yang et al. <a href="#15">[15]</a>  recovered a 3D mesh of the garment from a single view 2D image, which is further re-targeted to other human bodies. 
 </p>
 <p>
   There hasn't been much research done in computer vision to examine the virtual try-on problem. 
-  A conditional analogy GAN to exchange fashion items was recently presented by Jetchev and Bergmann [21]. 
+  A conditional analogy GAN to exchange fashion items was recently presented by Jetchev and Bergmann <a href="#16">[16]</a>. 
   However, they need product photos of both the target item and the original item on the individual during testing, 
   which makes it impractical in real-world situations. Furthermore, without any human representing or explicitly 
   considering deformations, it fails to provide photo-realistic virtual try-on results. Thus we focus on creating an 
@@ -165,8 +165,8 @@ GANs are computationally expensive, as high graphic computing is required to gen
 </p>
 
 <h2>Potential Contributions</h2> 
-<h4>In the following, we present the most important goals we have identified in the literature. 
-  We plan to solve some of these in the due course of time.</h4>
+<h6>In the following, we present the most important goals we have identified in the literature. 
+  We plan to solve some of these in the due course of time.</h6>
 <h3> Goal 1 - Outfit Generation: </h3>
 <p> The goal of this task is, given a fashion item 'xq' (e.g., skirt) representing the user's current interest, find the best item x belgongs I (e.g., shirt) or the fashion outfit F belongs I (e.g., shirt, pants, hat) that goes/go well with the input query.</p>
 
@@ -200,10 +200,11 @@ GANs are computationally expensive, as high graphic computing is required to gen
 </p>
 
 <h3>Citatations</h3>
-<p><a name="bottou-1990">[1]</a> <a href="https://papers.baulab.info/Bottou-1990.pdf"
-  >L&eacute;on Bottou and Patrick Gallinari.
-  <em>A framework for the cooperation of learning algorithms.</em></a>
-  Advances in neural information processing systems 3 (1990).
+<p><a name="15">[1]</a> <a href="https://arxiv.org/abs/1608.01250?context=cs"
+  >S. Yang, T. Ambert, Z. Pan, K. Wang, L. Yu, T. Berg, and M. C. Lin.</a>
+  <em> Detailed garment recovery from a single-view
+    image. In ICCV, 2017
+  </em>
 </p>
 <p><a name="Paper doll parsing">[2]</a> <a href="http://www.tamaraberg.com/papers/paperdoll.pdf"
   >Yamaguchi, M. Hadi Kiapour, and T. L. Berg.</em></a>
@@ -258,10 +259,51 @@ GANs are computationally expensive, as high graphic computing is required to gen
 </p>
 
 <p><a name="11">[11]</a> <a href="https://openaccess.thecvf.com/content_ICCV_2017/papers/Lassner_A_Generative_Model_ICCV_2017_paper.pdf"
-  >C. Lassner, G. Pons-Moll, and P. V. Gehler. A generative.</a>
-  <em> model of people in clothing. In ICCV, 2017
+  >C. Lassner, G. Pons-Moll, and P. V. Gehler.</a>
+  <em> A generative model of people in clothing. In ICCV, 2017
   </em>
 </p>
+
+<p><a name="12">[12]</a> <a href="https://arxiv.org/abs/1710.07346"
+  >C. S. Zhu, S. Fidler, R. Urtasun, D. Lin, and C. L. Chen. A generative.</a>
+  <em> 
+    Be your own prada: Fashion synthesis with structural coherence. In
+    ICCV, 2017
+  </em>
+</p>
+ 
+
+<p><a name="13">[13]</a> <a href="https://dl.acm.org/doi/10.1145/2185520.2185531"
+  >P. Guan, L. Reiss, D. A. Hirshberg, A. Weiss, and M. J. Black</a>
+  <em> Drape: Dressing any person. ACM TOG, 2012
+  </em>
+</p>
+
+
+
+<p><a name="14">[14]</a> <a href="https://www.3dbodyscanning.org/cap/papers/2014/14406_14sekine.pdf"
+  >M. Sekine, K. Sugita, F. Perbet, B. Stenger, and M. Nishiyama.</a>
+  <em> Virtual fitting by single-shot body shape estimation. In 3D Body Scanning Technologies, 2014
+  </em>
+</p>
+ 
+
+<p><a name="15">[15]</a> <a href="https://arxiv.org/abs/1608.01250?context=cs"
+  >S. Yang, T. Ambert, Z. Pan, K. Wang, L. Yu, T. Berg, and M. C. Lin.</a>
+  <em> Detailed garment recovery from a single-view
+    image. In ICCV, 2017
+  </em>
+</p>
+ 
+
+<p><a name="16">[16]</a> <a href="https://arxiv.org/abs/1709.04695"
+  >N. Jetchev and U. Bergmann. </a>
+  <em> The conditional analogy gan:
+    Swapping fashion articles on people images. In ICCVW,
+    2017.
+  </em>
+</p>
+
 
 <h2>Team Members</h2>
                                                    
