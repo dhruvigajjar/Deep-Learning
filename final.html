@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Virtual Try-on (VTON) Progress</title>
+<meta property="og:title" content="Your Project Name" />
+<meta name="twitter:title" content="Your Project Name" />
+<meta name="description" content="Your project about your cool topic described right here." />
+<meta property="og:description" content="Your project about your cool topic described right here." />
+<meta name="twitter:description" content="Your project about your cool topic described right here." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" /> 
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<!-- bootstrap for mobile-friendly layout -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+
+</head>
+<body class="nd-docs">
+<div class="nd-pageheader">
+ <div class="container">
+ <h1 class="lead">
+ <nobr class="widenobr">Virtual Try-on (VTON) Final Report</nobr>
+ </h1>
+ </div>
+</div><!-- end nd-pageheader -->
+<nav>  
+  <ul>  
+  <li> <a href=""> Home </a>  </li>  
+  <li> <a href="https://expo.baulab.info/2022-Fall/dhruvigajjar/progress.html"> Progress </a> </li>
+  <li> <a href="https://expo.baulab.info/2022-Fall/dhruvigajjar/final.html"> Final </a> </li>
+  </ul>  
+</nav>
+<div class="container">
+<div class="row">
+<div class="col justify-content-center text-center">
+<h2>Style-based Global Appearance Flow For Virtual Try-On</h2>
+
+ Team Members: Jivesh Poddar, Dhruvi Gajjar, Neha Cholera 
+</div>
+</div>
+<h2>Introduction</h2>
+<p>
+    Virtual mirrors are becoming the central focus of personalization and customer experience enhancement in retail. Thus the goal of our project is to improve Virtual Mirrors to enhance customer personalization and experience. It is basically a traditional mirror with a display behind the glass. Powered with computer vision cameras and AR, these mirrors can display a broad range of contextual information, which, in turn, helps buyers connect with the brand better. This ML-based engine provides its users with real-time fashion recommendations by observing their current outfits.
+Image-based virtual try-on targets draping a garment from an in-store rack over a digital representation of a person who is already dressed. The garment warping process, which involves aligning the target clothing with the relevant body components in the person's image, is an essential stage in the process of accomplishing this goal. 
+The wrapping module is error-prone to challenging body positions or occlusions as well as substantial misalignments between the images of the person and the garments. In order to get over this limitation, our team focuses on an architecture based on a VTON(Virtual Try-On Network). A VTON model's job is to make a customer seem good in the clothes they sell in the store. One of the most important goals of a VTON model is to correctly connect the clothing being tried on in the store with the relevant body components in the image of the person being modeled.
+</p>
+<h2>Literature Survey</h2>
+<p>
+  With the advancement in eCommerce, clothing has been a highly revenue-generating field.
+   There numerous types of research & experiments have been proposed and tested for customer 
+   satisfaction with optimizing cost. About a decade ago, a virtual try-on was incorporated by the concept of parsing clothes, 
+   an idea similar to annotations in machine learning. Retrieving similar styles to parse clothing items. 
+   clothes parsing Yamaguchi, et al (2013) <a href="#Paper doll parsing"> [2]</a>, clothing seen on the street to online products S. Liu, et al (2012)  <a href="#Street-toshop"> [3]</a>
+   fashion recommendation Y. Hu, et al (2015) <a href="#Collaborative fashion recommendation">[2]</a>, visual 
+   compatibility learning <a href="#Learning fashion">[7]</a> and fashion trend prediction. A year later, making use of parsing technologies, 
+   a trend of recommendation shot up customer interest <a href="#Collaborative fashion recommendation">[3]</a>. Then with AR technologies and integration with 3D visuals, 
+   virtual try-on became realistic with body shape and size. 
+</p>
+<p>
+  GANs <a href="#Generative Adversarial Nets">[6]</a> showed promising advancement with their realistic generative results. Class labels,
+priorly done by image parsing helped in generating clothes with desired properties <a href="#Conditional image synthesis">[7]</a>. 
+Labels also served as conditions in GANs. This idea was similar to the image-to-image translation using conditional GANs and 
+it became the root of virtual-try-on. Image-to-image translation not only transformed the image into the desired output, 
+i.e. fitting of clothes, sleeves length, cloth texture/material, etc but it also allowed training a CNN using a 
+regression loss as an alternative to GANs for this task without adversarial training. 
+These methods can produce photo-realistic images but have limited success when geometric changes occur <a href="#9">[9]</a>. 
+GANs are computationally expensive, as high graphic computing is required to generated precise and realistic image. 
+
+</p>
+
+<p>
+  There hasn't been much research done in computer vision to examine the virtual try-on problem. 
+  A conditional analogy GAN to exchange fashion items was recently presented by Jetchev and Bergmann <a href="#16">[16]</a>. 
+  However, they need product photos of both the target item and the original item on the individual during testing, 
+  which makes it impractical in real-world situations. Furthermore, without any human representing or explicitly 
+  considering deformations, it fails to provide photo-realistic virtual try-on results.
+  Thus we focus on creating an accurate photo-realistic image straight from 2D photographs, which is more computationally economical, as opposed to relying on 3D measurements to accomplish perfect clothing simulation. Thus we focus on CP-VTON+ (Clothing shape and texture Preserving VTON (Virtual Try-On Network)) to overcome these issues, which significantly outperforms the state-of-the-art methods, both quantitatively and qualitatively.
+</p>
+
+<h2>Project Goal</h2>
+<p> 
+    <b>Outfit Generation: </b> The goal of this task is to generate an item representing the user's current interest, and replace it with the user's current dress that goes/go well with the input query.
+</p>
+
+<h2>
+    Methods and Models
+</h2>
+<p>
+    Resembled with the listed set of work, our concentration will be 2D images only. 
+    It will be challenging compared to contemporary work, which takes 3D input variables. 
+    From past implementations that focus on tweaking attributes(color and textures) of apparel <a href="#10">[10]</a> 
+    for interactive search we intend to improve with the VITON model. In the context of image-to-image translation 
+    for fashion applications, the main drawback of Yoo et al <a href="#Pixellevel domain transfer">[5]</a>  was the transformation of a clothed person conditioned 
+    on a product image and backward. It ignored the condition of the model's pose. of the person's pose.  
+    Lassner et al. <a href="#11">[11]</a> proposed a model that lacked conditions/control on fashion items in the generated output. VTON first proposed the system setting and dataset of an in-shop cloth and a human target image. VTON also first used the two-stage architecture (a warping and a blending module) and CP-VTON (Clothing shape and texture Preserving VTON) [4] refined VTON for improving the clothing texture transfer, where the clothing area is blended with the warped cloth generated from the original cloth image, not reconstructing through a decoder network. 
+</p>
+
+<ol type="A">
+    <li> <b>Geometric Matching Module GMM: </b>the in-shop clothes <b><i>c</i></b> and input image representation <b><i>p</i></b> are aligned via a learnable matching module</li>
+    <li> <b>Try-On Module: </b> it generates a composition mask <b>M</b> and a rendered person <b><i>Ir</i></b>. The final result <b><i>Io</i></b> is composed of warped clothes <b><i>c</i></b> and the rendered person 
+        <b><i>Ir</i></b> with the composition mask <b>M</b>.
+    </li>
+</ol>
+    <div class="row">
+    <div class="col justify-content-center text-center">
+        <figure> 
+            <img src="image1.png" alt="Project 1" width="700" height="250">
+            <figcaption>Figure 1: Person Representation</figcaption>
+        </figure>
+    </div></div>
+
+<p>
+    In Figure 1, First, the input image is transformed to its representation form p to feed to Geometric Machine Module by various labels (features) such as skin, hair, body, pose, background, etc.
+</p>
+<p>
+    Below is the figure of the CP-VTON module.
+</p>
+    <div class="row">
+    <div class="col justify-content-center text-center">
+    <figure> 
+        <img src="model.png" alt="Project 1" width="800" height="550">
+        <figcaption>Figure 2: CPVTON model</figcaption>
+    </figure>
+</div></div>
+Working of CP-VTON is as it takes input representation <b><i>p</i></b> and input cloth <b><i>c</i></b>. 
+It feeds to down samplers (refer to legend at the bottom of Figure 2) and after correlation matching the output is 
+created in form of theta. This Theta has information on wrapping and body pose, skin, and hair mapping thus it goes through TPS Wrapping to generate exactly wrapped clothes for the respective pose, input <b><i>p</i></b>. This part is called <b>GMM</b>. 
+Again the wrapped cloth <b><i>c'</i></b> and person representation it down fed to the encoder-decoder to form composition mask <b>M</b> of the cloth. Finally, the combination of mask and Rendered person <b><i>Ir</i></b>
+is merged in the Mask composition page to output the final result. This module is called Try-on Module.
+<p>
+
+     
+</p>
+<h3>
+    Failures of CPVTON
+</h3>
+<p>
+    <div class="row">
+    <div class="col justify-content-center text-center">
+    <figure> 
+        <img src="image2.png" alt="Project 2 " width="700" height="450">
+        <figcaption>Figure 3: Failure Comparisons of existing CP-VTON model
+        </figcaption>
+    </figure>
+    </div></div>
+    <ol type="1">
+        <li> <b>Image 1&3: </b> Looking at the Shoulder we see it drapes a normal two-shoulder t-shirt wrongly </li>
+        <li> <b>Image 2:</b> Texture of IVY Park is not handled by try-module. </li>
+        <li> <b>Image 4: </b>short sleeves to long sleeve matching are correct in wrapping module. </li>
+        <li> <b>Image 5: </b> Misalignment of top's end (slant cut) and hand is incorrectly matched due to complex body pose </li>
+    </ol>
+</p>
+<p>In CP-VTON we focused on improving <b>GMM</b> and <b>Try-On-Module</b>.
+    The improvement of the GMM stage is in three aspects. 
+</p>
+<ol type="1">
+    <li> It is crucial to obtain the complete target body silhouette area from the target human image. However, in the VTON dataset, the neck and bare chest area is wrongly labeled as background, and the body shape is often distorted by hair occlusion. Thus an extra new label ‘skin’ is added to the label set, and then the label of the corresponding area is restored from the wrong label, ‘background’, considering the original human image and joint locations. The skin-labeled area is now included in the silhouette in the human representation. To recover the hair occlusion over the body, first, the hair occlusion areas are identified as the intersection of the convex contour of the upper clothing and the hair-labeled area, and the intersections are re-labeled as upper cloth.
+    </li>
+    <li>  The CP-VTON <b>GMM</b> network is built on CNN geometric matching and uses a pair of color images,
+         CP-VTON GMM inputs are binary mask information, silhouette, joint heatmap, and the colored try-on clothing. 
+         Since the colored texture from try-on clothing does not help in the matching process, 
+         GMM uses a clothing mask <b>M_Ci</b> instead of colored <b>Ci</b>.
+    <p> In conclusion, the experiments conducted using the currently available techniques demonstrate that warped clothing 
+        frequently exhibits severe distortion. This can be seen very clearly when the garment type is a monogram, 
+        which means that it only has one color. In this case, the warping is not nearly as heavily distorted. 
+        However, when there are a variety of colors and textures present, the warping process blends the various textures, 
+        which results in an image that is distorted. Although we were unable to determine the exact cause, we are able to draw the conclusion that the estimation of the TPS parameters needs to be regularized so that it takes into account the restrictions placed on clothing textures. For the sake of easy visualization and comprehension, the regularization of grid warping is defined on the grid deformation rather than directly on the TPS parameters. This is done in order to avoid having a warping that is too dissimilar from that of the previous and subsequent grid gaps in the equation.
+    </p>
+    
+
+<p> The new improved model looks like below:</p>
+<div class="row">
+    <div class="col justify-content-center text-center">
+    <figure> 
+        <img src="improved_model.png" alt="Project 2 " width="700" height="450">
+        <figcaption>The red Arrows show improvement areas with combined losses in the GMM module & Try on the module.
+        </figcaption>
+    </figure>
+    </div></div>
+<h4> Loss Functions</h4>
+<p>
+    The Loss function of CP-VTON is improvised as follows. We have used λ1 for regularisation with the previous loss L1. Previous loss L1 was basically SSIM (Similarity index & LPIPS on Wrapped cloth generation).    
+</p>
+<div class="row">
+    <div class="col justify-content-center text-center">
+    <figure> 
+        <img src="equation.png" alt="Project 2 " width="700" height="270">
+    </figure>
+    </div></div>
+    We also used λreg as a parameter to scale the weightage of newly added Regularised loss Lreg. We have also used the reference of regularisation to GMM loss to combining with the original loss. Thus, these are new loss equations.
+</li>
+<p>
+
+</p>
+<li>
+    To solve our third aspect, we extended the existing CP-VTON implementation as described above. We used automatic refinement for segmentation. i.e. improved loss function to adjust refinement automatically. For training, we started with a similar setting, keeping  λ1 = 1 and λreg = 0.5. This allowed us to compare the results of CP-VTON with newly added regularisations. We used all the dataset pairs dataset for all experiments. We kept the learning rate first fixed at 0.0001 for 100K steps and then linearly decay to zero for the remaining steps.
+</li>
+</ol>
+
+
+<h2> Results and Findings
+
+</h2>
+<p>
+    We have compared the CP-VTON+ model with the already implemented CP-VTON model on the following metrics followed by image output.
+</p>
+<ol type="1">
+    <li> <b>IoU: Intersection over Union</b> A number that quantifies the degree of overlap between two boxes. In the case of object detection and segmentation, IoU evaluates the overlap of the Ground Truth and Prediction region. Any score above 0.7-0.8 is a good score a suggesting 70-80% intersection. </li>
+    <li> <b>SSIM: Structural Similarity Index Measure </b> The  Structural Similarity Index Measure metric compares two images on three main features. Structure, Luminance, and Contrast.
+        Since one of the major failures in VTON is losing texture, and miscalculating skin color with cloth color or background. SSIM metric compares the model-generated output with actual output to give a score on the listed three features. results below show how improving SSIM has resulted in great texture perseverance. 
+        We have used standard formula for calculating <a href="https://en.wikipedia.org/wiki/Structural_similarity#:~:text=The%20structural%20similarity%20index%20measure,the%20similarity%20between%20two%20images."> SSIM </a> . Similar to IoU any score above 0.7-0.8 is a good score suggesting a 70-80% similarity index.
+    </li>
+    <li> <b>LPIPS: Learned Perceptual Image Patch Similarity </b>When there is supervised machine learning, i.e. we have the real output we use perceptual similarity to calculate how near the output image's active patch is to the original image's active patch. Thus LPIPS evaluates the distance between image patches. Higher means further/more different. Lower means more similar. We have used an inbuilt python function to calculate this metric. This is a difference score so, the lesser the score the better! below 10% difference is a good score.
+    </li>
+    <li> <b>IS: Inception Score </b> Whenever there is unsupervised machine learning, i.e. output doesn't have expected try-on output for comparison we use the Inception Score with mean and standard deviation. IS a technique used to assess the quality of image output by try-on Module (generative adversarial network). The score is calculated based on the output of a separate, 
+        pretrained Inceptionv3 image classification model applied to a sample of images generated by the generative model. 
+        We have used the PyTorch IS function to calculate this. ref <a href=" "> Wikipedia </a>. The inception Score is relative. Thus higher the score the better.
+    </li>
+</ol>
+<div class="row">
+    <div class="col justify-content-center text-center">
+        <figure>
+        <img src="resulti.png" alt="Project Results Table" width="1000" height="300">
+        <figcaption>
+            The above Table shows a numerical comparison between the baseline CP-VTON and CP-VTON+ with improvisations.
+        </figcaption>
+    </figure>
+    </div></div>
+    <ol type="1">
+        <li> <b>IoU: </b> The wrapping module is measured by IoU (Intersection over Union) which is now improved from 0.78 to 0.82.</li>
+        <li> <b>SSIM & LPIPS: </b>Due to extra labels, the Try-on results are measured by SSIM Structural similarity index measure and Learned Perceptual Image Patch Similarity (LPIPS) metrics. For the same clothing retry-on cases when we have ground truths for the warping stage and the blending stage, we can see SSIM is increased to 0.8036. The original target human image is used as the reference image for SSIM and LPIPS (a lower score means better), and the parsed segmentation area for the current upper clothing is used as the IoU reference. 
+        </li>
+        <li> <b>IS: </b>For different clothing try-on (where no ground truth is available), we used the Inception Score (IS). </li>
+    </ol>
+
+
+    <h2>References</h2>
+    <p><a name="A Review">[1]</a> <a href="https://arxiv.org/pdf/2202.02757.pdf">A Review of Modern Fashion Recommender Systems</a>
+    </p>
+    <p><a name="Style-Based">[2]</a> <a href="https://arxiv.org/pdf/2204.01046.pdf">Style-Based Global Appearance Flow for Virtual Try-On</a>
+      
+    </p>
+    <p><a name="A Curated">[3]</a> <a href="https://github.com/minar09/awesome-virtual-try-on">A Curated List of Awesome Virtual Try-on (VTON) Research </a>
+    </p>
+    <p><a name="Multi-Garment">[4]</a> <a href="https://virtualhumans.mpi-inf.mpg.de/papers/bhatnagar2019mgn/bhatnagar2019mgn.pdf">Multi-Garment:  Learning to Dress 3D People from Images</a>
+    </p>
+    
+    <h2>Citatations</h2>
+    <p><a name="15">[1]</a> <a href="https://arxiv.org/abs/1608.01250?context=cs"
+      >S. Yang, T. Ambert, Z. Pan, K. Wang, L. Yu, T. Berg, and M. C. Lin.</a>
+      <em> Detailed garment recovery from a single-view
+        image. In ICCV, 2017
+      </em>
+    </p>
+    <p><a name="Paper doll parsing">[2]</a> <a href="http://www.tamaraberg.com/papers/paperdoll.pdf"
+      >Yamaguchi, M. Hadi Kiapour, and T. L. Berg.</em></a>
+      Paper doll parsing: Retrieving similar styles to parse clothing items. In ICCV, 2013.
+      
+    </p>
+    <p><a name="Street-toshop">[3]</a> <a href="http://linliang.net/wp-content/uploads/2017/07/TMM_Clothes.pdf"
+      >S. Liu, Z. Song, G. Liu, C. Xu, H. Lu, and S. Yan.</a>
+      <em>Street-toshop: </em>Cross-scenario clothing retrieval via parts alignment and auxiliary set. In CVPR, 2012.
+    </p>
+    
+    <p><a name="Collaborative fashion recommendation">[4]</a> <a href="https://dl.acm.org/doi/abs/10.1145/2733373.2806239"
+      >Y. Hu, X. Yi, and L. S. Davis.</a>
+      <em>Collaborative fashion recommendation</em> a functional tensor factorization approach. In
+        ACM Multimedia, 2015.
+    </p>
+    
+    <p><a name="Pixellevel domain transfer">[5]</a> <a href="https://arxiv.org/abs/1603.07442"
+      >D. Yoo, N. Kim, S. Park, A. S. Paek, and I. S. Kweon.
+      <em>
+        In ECCV, 2016
+      </em></a>
+    </p>
+    <p><a name="Generative Adversarial Nets">[6]</a> <a href="https://arxiv.org/pdf/1406.2661.pdf"
+      >I. Goodfellow, J. Pouget-Abadie, M. Mirza, B. Xu, D. Warde-Farley, S. Ozair, A. Courville, and Y. Bengio</a>
+      <em>Generative adversarial nets. In NIPS, 2014
+      </em>
+    </p>
+    <p><a name="Conditional image synthesis">[6]</a> <a href="https://arxiv.org/abs/1610.09585"
+      >A. Odena, C. Olah, and J. Shlens.</a>
+      <em>Conditional image synthesis with auxiliary classifier gans. In ICML, 2017
+      </em>
+    </p>
+    
+    <p><a name="Learning fashion">[7]</a> <a href="https://arxiv.org/abs/1610.09585"
+      >X. Han, Z. Wu, Y.-G. Jiang, and L. S. Davis.</a>
+      <em> Learning fashion compatibility with bidirectional lstms. In ACM Multimedia, 2017.
+      </em>
+    </p>
+    <p><a name="8">[8]</a> <a href="https://www.cs.utexas.edu/~grauman/papers/whittle-search-cvpr2012.pdf">
+      A. Kovashka, D. Parikh, and K. Grauman.</a>
+      <em> Whittlesearch:
+        Image search with relative attribute feedback. In CVPR,
+        2012.
+      </em>
+    </p>
+     
+    <p><a name="10">[10]</a> <a href="https://arxiv.org/abs/1703.10593"
+      >J.-Y. Zhu, T. Park, P. Isola, and A. A. Efros.</a>
+      <em> Unpaired imageto-image translation using cycle-consistent adversarial networks. In ICCV, 2017
+      </em>
+    </p>
+    
+    <p><a name="11">[11]</a> <a href="https://openaccess.thecvf.com/content_ICCV_2017/papers/Lassner_A_Generative_Model_ICCV_2017_paper.pdf"
+      >C. Lassner, G. Pons-Moll, and P. V. Gehler.</a>
+      <em> A generative model of people in clothing. In ICCV, 2017
+      </em>
+    </p>
+    
+    <p><a name="12">[12]</a> <a href="https://arxiv.org/abs/1710.07346"
+      >C. S. Zhu, S. Fidler, R. Urtasun, D. Lin, and C. L. Chen. A generative.</a>
+      <em> 
+        Be your own prada: Fashion synthesis with structural coherence. In
+        ICCV, 2017
+      </em>
+    </p>
+     
+    
+    <p><a name="13">[13]</a> <a href="https://dl.acm.org/doi/10.1145/2185520.2185531"
+      >P. Guan, L. Reiss, D. A. Hirshberg, A. Weiss, and M. J. Black</a>
+      <em> Drape: Dressing any person. ACM TOG, 2012
+      </em>
+    </p>
+    
+    
+    
+    <p><a name="14">[14]</a> <a href="https://www.3dbodyscanning.org/cap/papers/2014/14406_14sekine.pdf"
+      >M. Sekine, K. Sugita, F. Perbet, B. Stenger, and M. Nishiyama.</a>
+      <em> Virtual fitting by single-shot body shape estimation. In 3D Body Scanning Technologies, 2014
+      </em>
+    </p>
+     
+    
+    <p><a name="15">[15]</a> <a href="https://arxiv.org/abs/1608.01250?context=cs"
+      >S. Yang, T. Ambert, Z. Pan, K. Wang, L. Yu, T. Berg, and M. C. Lin.</a>
+      <em> Detailed garment recovery from a single-view
+        image. In ICCV, 2017
+      </em>
+    </p>
+     
+    
+    <p><a name="16">[16]</a> <a href="https://arxiv.org/abs/1709.04695"
+      >N. Jetchev and U. Bergmann. </a>
+      <em> The conditional analogy gan:
+        Swapping fashion articles on people images. In ICCVW,
+        2017.
+      </em>
+    </p>    
+
+<footer class="nd-pagefooter">
+    <div class="row">
+        <div class="col-6 col-md text-center">
+        <a href="https://cs7150.baulab.info/">About CS 7150</a>
+        </div>
+    </div>
+    </footer>
+    
+    </body>
+    <script>
+    $(document).on('click', '.clickselect', function(ev) {
+    var range = document.createRange();
+    range.selectNodeContents(this);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    });
+    // Google analytics below.
+    window.dataLayer = window.dataLayer || [];
+    </script>
+    </html>
+      
+
