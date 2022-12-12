@@ -164,7 +164,7 @@ is merged in the Mask composition page to output the final result. This module i
     The improvement of the GMM stage is in three aspects. 
 </p>
 <ol type="1">
-    <li> It is crucial to obtain the complete target body silhouette area from the target human image. However, in the VTON dataset, the neck and bare chest area is wrongly labeled as background, and the body shape is often distorted by hair occlusion. Thus an extra new label ‘skin’ is added to the label set, and then the label of the corresponding area is restored from the wrong label, ‘background’, considering the original human image and joint locations. The skin-labeled area is now included in the silhouette in the human representation. To recover the hair occlusion over the body, first, the hair occlusion areas are identified as the intersection of the convex contour of the upper clothing and the hair-labeled area, and the intersections are re-labeled as upper cloth.
+    <li> It is crucial to obtain the complete target body silhouette area from the target human image. However, in the VTON dataset, the neck and bare chest area is wrongly labeled as background, and the body shape is often distorted by hair occlusion. Thus an extra new label 'skin' is added to the label set, and then the label of the corresponding area is restored from the wrong label, 'background', considering the original human image and joint locations. The skin-labeled area is now included in the silhouette in the human representation. To recover the hair occlusion over the body, first, the hair occlusion areas are identified as the intersection of the convex contour of the upper clothing and the hair-labeled area, and the intersections are re-labeled as upper cloth.
     </li>
     <li>  The CP-VTON <b>GMM</b> network is built on CNN geometric matching and uses a pair of color images,
          CP-VTON GMM inputs are binary mask information, silhouette, joint heatmap, and the colored try-on clothing. 
@@ -203,7 +203,8 @@ is merged in the Mask composition page to output the final result. This module i
 
 </p>
 <li>
-    To solve our third aspect, we extended the existing CP-VTON implementation as described above. We used automatic refinement for segmentation. i.e. improved loss function to adjust refinement automatically. For training, we started with a similar setting, keeping  λ1 = 1 and λreg = 0.5. This allowed us to compare the results of CP-VTON with newly added regularisations. We used all the dataset pairs dataset for all experiments. We kept the learning rate first fixed at 0.0001 for 100K steps and then linearly decay to zero for the remaining steps.
+    To solve our third aspect, we extended the existing CP-VTON implementation as described above. We used automatic refinement for segmentation. i.e. improved loss function to adjust refinement automatically. 
+    For training, we started with a similar setting, keeping  lambda_1 = 1 and lambda_reg = 0.5. This allowed us to compare the results of CP-VTON with newly added regularisations. We used all the dataset pairs dataset for all experiments. We kept the learning rate first fixed at 0.0001 for 100K steps and then linearly decay to zero for the remaining steps.
 </li>
 </ol>
 
@@ -255,9 +256,8 @@ is merged in the Mask composition page to output the final result. This module i
     Here, we tested the CPVTON+ model with 3 different kinds of input styles and you can see the results. 
     The left one is CP-VTON and the right one is the improved CP-VTON+ model. For the first image, we can see the referenced 
     image is wearing a one-shoulder striped top and the target cloth is a normal two-shoulder T-shirt. We can see that the 
-    CPVTON+ model has generated the output more accurately than the CP-VTON. Similarly for cold shoulder T-shirts. 
-    The last referenced image has been taken from Alibaba's Fashion dataset with a background we have removed the background and we can see the successful output. 
-    
+    CPVTON+ model has generated the output more accurately than the CP-VTON. Similarly for cold shoulder T-shirt. CPVTON has misaligned again whereas improved CPVTON+ has tried to predict hand line & thus try-on sleeve of target variable almost accurate
+    The last referenced image has been taken from Alibaba's Fashion dataset with a background and we have removed the background produced desired output.
     </p>
     <h2>Future Scope</h2>
     <p>
