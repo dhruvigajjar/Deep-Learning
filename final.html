@@ -259,6 +259,15 @@ is merged in the Mask composition page to output the final result. This module i
     CPVTON+ model has generated the output more accurately than the CP-VTON. Similarly for cold shoulder T-shirt. CPVTON has misaligned again whereas improved CPVTON+ has tried to predict hand line & thus try-on sleeve of target variable almost accurate
     The last referenced image has been taken from Alibaba's Fashion dataset with a background and we have removed the background produced desired output.
     </p>
+    <h3> Our Addings</h3>
+    <p>We compared the CPVITON and CPVITON+ architecture on various parameters.</p><p>
+        The neck and bare chest area is wrongly labeled as background, and the body shape is often distorted by hair occlusion. Thus a new label 'skin' is added to the label set, and then the label of the corresponding area is restored from the wrong label, 'background', considering the original human image and joint locations. The skin-labeled area is now included in the human representation.
+        </p> <p>
+        The experiments with CPVITON reveals that warped clothing is often severely distorted. When the clothing type is in monogram, i.e. having just one color, the warping is not that heavily distorted. However, when there are multiple colors and textures, the warping blends the different textures, resulting in a distorted image. Which estimates the need of a regularization, taking into account the restriction of clothing textures. 
+        </p> <p>There is significant improvement in evaluation metrics and we see output generated are more realistic. They are shape & pose invariant as well as preserving texture, 
+        
+        Apart from the dataset given in the research paper we referred to, we extended our approach to test this model on multiple datasets. And results are satisfactory. 
+        </p>
     <h2>Future Scope</h2>
     <p>
         <b>Outfit Recommendation: </b>

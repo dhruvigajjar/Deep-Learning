@@ -88,19 +88,15 @@ This is because the clothing being tried on in the store is typically not spatia
 <p> 
         <b>Outfit Generation:</b>This is nothing but for a given input person we need to replace it with the user's current interest in clothing that goes well.
     </p><p> 
-        <b>Outfit Recommendation: </b> This is notifying the user that based on these input details such as a person, occasion, color, size, etc this dress would look great. This would be done by maximizing a utility function that measures the suitability of recommendation of a fashion outfit for a specific user.
-    </p><p> 
-        <b>Pair recommendation:</b> This is typically performed as a top-bottom or bottom-up recommendation. In this task, given clothes related to the upper part of the body, the aim is to predict the possible lower part and vice versa. For instance, a user has a cloth (e.g., tops) related to the upper part of the body and looks for the bottom (e.g., trousers) from a large collection that best matches the tops. This requires a collection of pairs of top and bottom images for compatibility modeling.
-    </p><p> 
-        <b>Fill In the Blank (FITB):</b> To find a setting where we are given an incomplete outfit (e.g., shirt, pants) with a missing item (e.g., shoes), and the method must find the best missing fashion item from multiple choices which are compatible visually. This is a convenient scenario in real life, e.g., a user wants to choose a pair of shoes to suit his pants and jacket.
-</p>
+        <b>(Future) Outfit Recommendation: </b> This is notifying the user that based on these input details such as a person, occasion, color, size, etc this dress would look great. This would be done by maximizing a utility function that measures the suitability of recommendation of a fashion outfit for a specific user.
+    </p>
 <h2>Next Steps</h2>
 <p> 
     <b>Working on MOVENET Dataset:</b> We have found one more dataset which technically belongs to solve some other problem statement but we are doing some data preprocessing and augmentation steps such as removing the background, and discard irrelevant classes, and then removing images having more than one person.  This new dataset is huge and we hope this will help to increase our model performance a lot. The goal of using this dataset is to make our model pose and shape invariant.
 </p><p> 
     <b>Improve Accuracy: </b> To achieve accurate results for outfit generation is our primary target because all other goals are linked to it. So we are trying to develop a robust model. 
 </p><p> 
-    <b>Next Goals: </b> After completing the ongoing tasks we will proceed to the recommendation parts which include goals 3 and 4 which are in continuation to goal 2. One good thing is we are almost at par with our expectations and the timeline we presented in our pitch last time.
+    <b>Next Goals: </b> After completing the ongoing tasks we will proceed to the recommendation parts. One good thing is we are almost at par with our expectations and the timeline we presented in our pitch last time.
 </p><p>We focused on training the upper outfit of the body, we will follow the same steps to train the bottom apparel.
 </p>
 
