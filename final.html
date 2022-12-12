@@ -82,9 +82,16 @@ GANs are computationally expensive, as high graphic computing is required to gen
 
 <h2>Project Goal</h2>
 <p> 
-    <b>Outfit Generation: </b> The goal of this task is to generate an item representing the user's current interest, and replace it with the user's current dress that goes/go well with the input query.
+    <b>Outfit Generation: </b> The goal of this task is replace user's current outfit to target outfit and generate user's look.
 </p>
-
+<h2>About Data</h2>
+<p>
+    We trained our model on the Zalando dataset. It contains a training set containing 14,221 image pairs and a t
+    esting dataset of 2,032. Each pair means a person's image and the image of the garment on the person. 
+    Both person and garment images are of the resolution 256 x 192. We created a testing dataset, 
+    denoted by augmented VTON, to evaluate the model's robustness to the randomly positioned person image with larger 
+    misalignments with the garment images in the original dataset. It is split into approx 14.2k Training images and 2k testing images. We also included the Movenet dataset which helps our model to become shape and pose invariant. Later we added Alibaba Fashion Product Dataset from which we selected a few classes we had to work upon. We had to perform a lot of preprocessing and data augmentation steps. We made image resolution same for all the types of dataset for consistency. In the end, we were able to gather 30k images for training and 6k for validation and 4k images for testing. 
+</p>
 <h2>
     Methods and Models
 </h2>
@@ -235,8 +242,35 @@ is merged in the Mask composition page to output the final result. This module i
         </li>
         <li> <b>IS: </b>For different clothing try-on (where no ground truth is available), we used the Inception Score (IS). </li>
     </ol>
+    <div class="row">
+        <div class="col justify-content-center text-center">
+            <figure>
+            <img src="result2.png" alt="Project Results Table" width="800" height="400">
+            <figcaption>
+                Figure 8. Result images
+            </figcaption>
+        </figure>
+    </div></div>
+    <p>
+    Here, we tested the CPVTON+ model with 3 different kinds of input styles and you can see the results. 
+    The left one is CP-VTON and the right one is the improved CP-VTON+ model. For the first image, we can see the referenced 
+    image is wearing a one-shoulder striped top and the target cloth is a normal two-shoulder T-shirt. We can see that the 
+    CPVTON+ model has generated the output more accurately than the CP-VTON. Similarly for cold shoulder T-shirts. 
+    The last referenced image has been taken from Alibaba's Fashion dataset with a background we have removed the background and we can see the successful output. 
+    
+    </p>
+    <h2>Future Scope</h2>
+    <p>
+        <b>Outfit Recommendation: </b>
+        This goal is notifying the user based on these input details such as a person, occasion, color size, etc 
+        this dress would look great. Here, a set of objects is recommended to the user at once, by maximizing a 
+        utility function that measures the suitability of guiding a fashion outfit to a specific user. We propose OutfitGAN, 
+        which generates/recommends a newly discovered fashion item that matches well with the items already in an outfit. 
+        We use relational networks to capture item compatibility in fashion outfits. We re-use a pretrained 
+        Compatibility Scoring Network (CSN) as a sub-module of OutfitGAN, which has to learn compatibility among fashion 
+        items via relational networks. 
 
-
+    </p>
     <h2>References</h2>
     <p><a name="A Review">[1]</a> <a href="https://arxiv.org/pdf/2202.02757.pdf">A Review of Modern Fashion Recommender Systems</a>
     </p>
@@ -353,26 +387,29 @@ is merged in the Mask composition page to output the final result. This module i
       </em>
     </p>    
 
+</div><!--col-->
+</div><!--row -->
+</div> <!-- container -->
 <footer class="nd-pagefooter">
     <div class="row">
         <div class="col-6 col-md text-center">
         <a href="https://cs7150.baulab.info/">About CS 7150</a>
         </div>
     </div>
-    </footer>
+</footer>
     
-    </body>
-    <script>
-    $(document).on('click', '.clickselect', function(ev) {
-    var range = document.createRange();
-    range.selectNodeContents(this);
-    var sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
-    });
-    // Google analytics below.
-    window.dataLayer = window.dataLayer || [];
-    </script>
-    </html>
+</body>
+<script>
+$(document).on('click', '.clickselect', function(ev) {
+var range = document.createRange();
+range.selectNodeContents(this);
+var sel = window.getSelection();
+sel.removeAllRanges();
+sel.addRange(range);
+});
+// Google analytics below.
+window.dataLayer = window.dataLayer || [];
+</script>
+</html>
       
 
